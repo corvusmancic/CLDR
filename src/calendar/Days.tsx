@@ -94,6 +94,7 @@ const Days: React.FC<IDays> = ({
     );
   }
 
+
   return <nav className="calendar--days">{[...labels, ...days]}</nav>;
 };
 
