@@ -18,8 +18,8 @@ const Days: React.FC<IDays> = ({
   
   console.log(3, startDate, endDate)
   
-
-  const firstDayOfMonth = date.startOf("month").day(); 
+  // Убедимся, что неделя начинается с понедельника
+  const firstDayOfMonth = date.startOf("month").day() === 0 ? 6 : date.startOf("month").day() - 1;
   const daysInMonth = date.daysInMonth();
   const previousMonth = date.subtract(1, "month");
   const previousMonthDays = previousMonth.daysInMonth();
@@ -27,6 +27,7 @@ const Days: React.FC<IDays> = ({
   const days: React.ReactElement[] = [];
   const labels: React.ReactElement[] = [];
 
+  // Создаем метки дней недели
   for (let i = 0; i < 7; i++) {
     labels.push(
       <span className="label" key={`label-${i}`}>
@@ -35,6 +36,7 @@ const Days: React.FC<IDays> = ({
     );
   }
 
+  // Добавляем дни предыдущего месяца
   for (let i = 0; i < firstDayOfMonth; i++) {
     const prevDate = previousMonth.date(previousMonthDays - firstDayOfMonth + i + 1);
     days.push(
@@ -53,6 +55,7 @@ const Days: React.FC<IDays> = ({
     );
   }
 
+  // Добавляем дни текущего месяца
   for (let i = 1; i <= daysInMonth; i++) {
     const currentDate = date.date(i);
     days.push(
@@ -71,6 +74,7 @@ const Days: React.FC<IDays> = ({
     );
   }
 
+  // Добавляем дни следующего месяца, чтобы заполнить календарь
   const totalDaysDisplayed = days.length;
   for (let i = 1; i <= 42 - totalDaysDisplayed; i++) {
     const nextDate = date.add(1, "month").date(i);
